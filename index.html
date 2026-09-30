@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Página Web</title>
+  <style>
+    /* Variables de colores: Rosa Bebé, Pink Suave y Escala de Grises */
+    :root {
+      --bg-color: #fff5f7;        /* Rosa Bebé suave de fondo */
+      --card-bg: #ffffff;         /* Fondo de tarjetas blanco */
+      --primary-gray: #343a40;    /* Gris oscuro para textos principales y encabezados */
+      --medium-gray: #6c757d;     /* Gris medio para bordes y subtítulos */
+      --light-gray: #f8f9fa;      /* Gris claro para áreas de resultados */
+      --soft-pink: #f4acb7;       /* Pink Suave para botones e interacciones */
+      --soft-pink-hover: #ea8a9a; /* Pink un poco más intenso para hover */
+      --accent-pink: #ffe5ec;     /* Pink súper claro para destacados */
+      --text-color: #212529;      /* Color de texto principal */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    /* Contenedor del Logo de SENATI en la esquina superior izquierda */
+    .senati-brand {
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .senati-brand img {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+      background-color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .senati-brand span {
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    header {
+      background-color: var(--primary-gray);
+      color: #ffffff;
+      padding: 35px 20px 25px 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-bottom: 5px solid var(--soft-pink);
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+      margin-top: 15px;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: var(--soft-pink);
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid #e9ecef;
+      border-top: 4px solid var(--soft-pink);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .badge {
+      background-color: var(--soft-pink);
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      color: var(--primary-gray);
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--medium-gray);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--soft-pink);
+      box-shadow: 0 0 0 3px rgba(244, 172, 183, 0.25);
+    }
+
+    .btn {
+      width: 100%;
+      background-color: var(--soft-pink);
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--soft-pink-hover);
+    }
+
+    .result-box {
+      margin-top: 15px;
+      padding: 12px;
+      background-color: var(--light-gray);
+      border-left: 4px solid var(--medium-gray);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: var(--primary-gray);
+      min-height: 45px;
+      word-break: break-word;
+    }
+
+    .result-box.active {
+      border-left-color: var(--soft-pink);
+      background-color: var(--accent-pink);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: var(--medium-gray);
+      font-size: 0.85rem;
+      border-top: 1px solid #e9ecef;
+    }
+
+    @media (max-width: 650px) {
+      .senati-brand {
+        position: static;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+      header h1 {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Logo SENATI apuntando a tu carpeta local -->
+    <div class="senati-brand">
+      <img src="img senati/senati.png" alt="Logo SENATI">
+      <span>SENATI</span>
+    </div>
+
+    <h1>Práctica Dirigida sobre Algoritmos - Nivel 1</h1>
+    <p>Soluciones desarrolladas en JavaScript</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Ejercicio 1 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">1</span>
+          <h2 class="card-title">4 Operaciones Básicas</h2>
+        </div>
+        <div class="form-group">
+          <label for="e1-n1">Número 1:</label>
+          <input type="number" id="e1-n1" placeholder="Ingrese primer número">
+        </div>
+        <div class="form-group">
+          <label for="e1-n2">Número 2:</label>
+          <input type="number" id="e1-n2" placeholder="Ingrese segundo número">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio1()">Calcular</button>
+        <div class="result-box" id="res-1">Ingrese los valores y presione Calcular.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 2 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">2</span>
+          <h2 class="card-title">Determinar el Mayor de 3 Números</h2>
+        </div>
+        <div class="form-group">
+          <label for="e2-n1">Número 1:</label>
+          <input type="number" id="e2-n1" placeholder="Primer número">
+        </div>
+        <div class="form-group">
+          <label for="e2-n2">Número 2:</label>
+          <input type="number" id="e2-n2" placeholder="Segundo número">
+        </div>
+        <div class="form-group">
+          <label for="e2-n3">Número 3:</label>
+          <input type="number" id="e2-n3" placeholder="Tercer número">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio2()">Evaluar Mayor</button>
+        <div class="result-box" id="res-2">Ingrese los 3 números.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 3 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">3</span>
+          <h2 class="card-title">Vocal o Consonante</h2>
+        </div>
+        <div class="form-group">
+          <label for="e3-letra">Ingrese una letra:</label>
+          <input type="text" id="e3-letra" maxlength="1" placeholder="Ej: a, B, z">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio3()">Verificar</button>
+        <div class="result-box" id="res-3">Ingrese una letra.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 4 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">4</span>
+          <h2 class="card-title">Día de la Semana</h2>
+        </div>
+        <div class="form-group">
+          <label for="e4-dia">Número del día (1 - 7):</label>
+          <input type="number" id="e4-dia" min="1" max="7" placeholder="1 a 7">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio4()">Obtener Día</button>
+        <div class="result-box" id="res-4">Ingrese un número del 1 al 7.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 5 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">5</span>
+          <h2 class="card-title">Factorial de un Número</h2>
+        </div>
+        <div class="form-group">
+          <label for="e5-num">Número entero (≥ 0):</label>
+          <input type="number" id="e5-num" min="0" placeholder="Ej: 5">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio5()">Calcular Factorial</button>
+        <div class="result-box" id="res-5">Ingrese un número entero.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 6 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">6</span>
+          <h2 class="card-title">Tabla de Multiplicar</h2>
+        </div>
+        <div class="form-group">
+          <label for="e6-num">Número para la tabla:</label>
+          <input type="number" id="e6-num" placeholder="Ej: 7">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio6()">Generar Tabla</button>
+        <div class="result-box" id="res-6">Ingrese un número.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 7 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">7</span>
+          <h2 class="card-title">Promedio y Estado Académico</h2>
+        </div>
+        <div class="form-group">
+          <label for="e7-n1">Nota 1:</label>
+          <input type="number" id="e7-n1" min="0" max="20" step="0.1" placeholder="0 - 20">
+        </div>
+        <div class="form-group">
+          <label for="e7-n2">Nota 2:</label>
+          <input type="number" id="e7-n2" min="0" max="20" step="0.1" placeholder="0 - 20">
+        </div>
+        <div class="form-group">
+          <label for="e7-n3">Nota 3:</label>
+          <input type="number" id="e7-n3" min="0" max="20" step="0.1" placeholder="0 - 20">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio7()">Calcular Promedio</button>
+        <div class="result-box" id="res-7">Ingrese las 3 notas.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 8 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">8</span>
+          <h2 class="card-title">Área de un Círculo</h2>
+        </div>
+        <div class="form-group">
+          <label for="e8-radio">Radio del círculo:</label>
+          <input type="number" id="e8-radio" min="0" step="0.1" placeholder="Ej: 5">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio8()">Calcular Área</button>
+        <div class="result-box" id="res-8">Ingrese el radio.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 9 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">9</span>
+          <h2 class="card-title">Número Capicúa (3 Cifras)</h2>
+        </div>
+        <div class="form-group">
+          <label for="e9-num">Número de 3 cifras:</label>
+          <input type="number" id="e9-num" placeholder="Ej: 121, 454">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio9()">Verificar Capicúa</button>
+        <div class="result-box" id="res-9">Ingrese un número de 3 cifras.</div>
+      </div>
+    </div>
+
+    <!-- Ejercicio 10 -->
+    <div class="card">
+      <div>
+        <div class="card-header">
+          <span class="badge">10</span>
+          <h2 class="card-title">Determinar Número Primo</h2>
+        </div>
+        <div class="form-group">
+          <label for="e10-num">Número entero:</label>
+          <input type="number" id="e10-num" placeholder="Ej: 7, 13, 20">
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="resolverEjercicio10()">Verificar Primo</button>
+        <div class="result-box" id="res-10">Ingrese un número.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Algoritmos y Programación para Desarrollo de Software &copy; SENATI</p>
+  </footer>
+
+  <script>
+    // Función auxiliar para mostrar resultados
+    function mostrarResultado(id, htmlContent) {
+      const el = document.getElementById(id);
+      el.innerHTML = htmlContent;
+      el.classList.add('active');
+    }
+
+    // 1. Las 04 operaciones básicas
+    function resolverEjercicio1() {
+      const n1 = parseFloat(document.getElementById('e1-n1').value);
+      const n2 = parseFloat(document.getElementById('e1-n2').value);
+
+      if (isNaN(n1) || isNaN(n2)) {
+        mostrarResultado('res-1', '⚠️ Por favor, ingrese ambos números.');
+        return;
+      }
+
+      const suma = n1 + n2;
+      const resta = n1 - n2;
+      const mult = n1 * n2;
+      const div = n2 !== 0 ? (n1 / n2).toFixed(2) : 'No se puede dividir entre cero';
+
+      mostrarResultado('res-1', `
+        <b>Suma:</b> ${suma}<br>
+        <b>Resta:</b> ${resta}<br>
+        <b>Multiplicación:</b> ${mult}<br>
+        <b>División:</b> ${div}
+      `);
+    }
+
+    // 2. Mayor de 03 números
+    function resolverEjercicio2() {
+      const n1 = parseFloat(document.getElementById('e2-n1').value);
+      const n2 = parseFloat(document.getElementById('e2-n2').value);
+      const n3 = parseFloat(document.getElementById('e2-n3').value);
+
+      if (isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+        mostrarResultado('res-2', '⚠️ Ingrese los 3 números.');
+        return;
+      }
+
+      const mayor = Math.max(n1, n2, n3);
+      mostrarResultado('res-2', `El número mayor es: <b>${mayor}</b>`);
+    }
+
+    // 3. Vocal o Consonante
+    function resolverEjercicio3() {
+      const letra = document.getElementById('e3-letra').value.trim().toLowerCase();
+
+      if (!letra || !/^[a-záéíóúñ]$/i.test(letra)) {
+        mostrarResultado('res-3', '⚠️ Ingrese una única letra válida.');
+        return;
+      }
+
+      if (['a', 'e', 'i', 'o', 'u', 'á', 'é', 'í', 'ó', 'ú'].includes(letra)) {
+        mostrarResultado('res-3', `La letra <b>${letra.toUpperCase()}</b> es una <b>VOCAL</b>.`);
+      } else {
+        mostrarResultado('res-3', `La letra <b>${letra.toUpperCase()}</b> es una <b>CONSONANTE</b>.`);
+      }
+    }
+
+    // 4. Nombre del día de la semana
+    function resolverEjercicio4() {
+      const dia = parseInt(document.getElementById('e4-dia').value);
+      const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+      if (isNaN(dia) || dia < 1 || dia > 7) {
+        mostrarResultado('res-4', '⚠️ Ingrese un número válido del 1 al 7.');
+        return;
+      }
+
+      mostrarResultado('res-4', `Día ${dia}: <b>${dias[dia - 1]}</b>`);
+    }
+
+    // 5. Factorial de un número
+    function resolverEjercicio5() {
+      const num = parseInt(document.getElementById('e5-num').value);
+
+      if (isNaN(num) || num < 0) {
+        mostrarResultado('res-5', '⚠️ Ingrese un número entero mayor o igual a 0.');
+        return;
+      }
+
+      let factorial = 1;
+      for (let i = 1; i <= num; i++) {
+        factorial *= i;
+      }
+
+      mostrarResultado('res-5', `El factorial de <b>${num}!</b> es: <b>${factorial}</b>`);
+    }
+
+    // 6. Tabla de multiplicar
+    function resolverEjercicio6() {
+      const num = parseInt(document.getElementById('e6-num').value);
+
+      if (isNaN(num)) {
+        mostrarResultado('res-6', '⚠️️ Por favor, ingrese un número.');
+        return;
+      }
+
+      let html = `<b>Tabla del ${num}:</b><br>`;
+      for (let i = 1; i <= 10; i++) {
+        html += `${num} x ${i} = ${num * i}<br>`;
+      }
+
+      mostrarResultado('res-6', html);
+    }
+
+    // 7. Promedio y estado (Aprobado >= 10.5)
+    function resolverEjercicio7() {
+      const n1 = parseFloat(document.getElementById('e7-n1').value);
+      const n2 = parseFloat(document.getElementById('e7-n2').value);
+      const n3 = parseFloat(document.getElementById('e7-n3').value);
+
+      if (isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+        mostrarResultado('res-7', '⚠️ Ingrese las 3 notas.');
+        return;
+      }
+
+      const promedio = (n1 + n2 + n3) / 3;
+      const estado = promedio >= 10.5 ? '<b>APROBADO</b>' : '<b>DESAPROBADO</b>';
+
+      mostrarResultado('res-7', `
+        Promedio: <b>${promedio.toFixed(2)}</b><br>
+        Estado: ${estado}
+      `);
+    }
+
+    // 8. Área de un círculo (Área = PI * r^2)
+    function resolverEjercicio8() {
+      const radio = parseFloat(document.getElementById('e8-radio').value);
+
+      if (isNaN(radio) || radio <= 0) {
+        mostrarResultado('res-8', '⚠️ Ingrese un radio mayor a 0.');
+        return;
+      }
+
+      const area = Math.PI * Math.pow(radio, 2);
+      mostrarResultado('res-8', `El área del círculo es: <b>${area.toFixed(2)}</b>`);
+    }
+
+    // 9. Número Capicúa de 3 cifras
+    function resolverEjercicio9() {
+      const valorStr = document.getElementById('e9-num').value.trim();
+      const num = parseInt(valorStr);
+
+      if (isNaN(num) || valorStr.length !== 3 || num < 100 || num > 999) {
+        mostrarResultado('res-9', '⚠️ Ingrese un número entero de exactamente 3 cifras.');
+        return;
+      }
+
+      const primeraCifra = valorStr[0];
+      const ultimaCifra = valorStr[2];
+
+      if (primeraCifra === ultimaCifra) {
+        mostrarResultado('res-9', `El número <b>${num}</b> es <b>CAPICÚA</b>.`);
+      } else {
+        mostrarResultado('res-9', `El número <b>${num}</b> <b>NO es capicúa</b>.`);
+      }
+    }
+
+    // 10. Número Primo
+    function resolverEjercicio10() {
+      const num = parseInt(document.getElementById('e10-num').value);
+
+      if (isNaN(num) || num <= 1) {
+        mostrarResultado('res-10', '⚠️ Ingrese un número entero mayor a 1.');
+        return;
+      }
+
+      let esPrimo = true;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+          esPrimo = false;
+          break;
+        }
+      }
+
+      if (esPrimo) {
+        mostrarResultado('res-10', `El número <b>${num}</b> <b>ES PRIMO</b>.`);
+      } else {
+        mostrarResultado('res-10', `El número <b>${num}</b> <b>NO es primo</b>.`);
+      }
+    }
+  </script>
+</body>
+</html>
